@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SmartPlag.CSharp.Model
+﻿namespace SmartPlag.Tokenzier.CSharp.Model
 {
   public class Token
   {

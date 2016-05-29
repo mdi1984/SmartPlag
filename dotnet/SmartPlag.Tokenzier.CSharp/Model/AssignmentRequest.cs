@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace SmartPlag.CSharp.Model
+namespace SmartPlag.Tokenzier.CSharp.Model
 {
   public class AssignmentRequest
   {

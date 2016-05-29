@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SmartPlag.CSharp.Model
+namespace SmartPlag.Tokenzier.CSharp.Model
 {
   public class StudentTokenMap
   {

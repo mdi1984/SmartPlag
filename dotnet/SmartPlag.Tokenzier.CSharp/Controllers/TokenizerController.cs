@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using SmartPlag.CSharp.Model;
+using SmartPlag.Tokenzier.CSharp.Model;
 
-namespace SmartPlag.CSharp.Controllers
+namespace SmartPlag.Tokenzier.CSharp.Controllers
 {
   [Route("api/[controller]")]
   public class TokenizerController : Controller
@@ -51,7 +48,7 @@ namespace SmartPlag.CSharp.Controllers
         return new ObjectResult(response);
 
       }
-      catch (Exception ex)
+      catch (Exception)
       {
         return new BadRequestObjectResult("Invalid request format");
       }
