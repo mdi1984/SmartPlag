@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SmartPlag.Comparison.GreedyStringTiling.Model
+namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model
 {
   public class Sequence<T> where T : IComparable
   {

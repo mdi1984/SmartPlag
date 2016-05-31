@@ -1,4 +1,4 @@
-﻿namespace SmartPlag.Comparison.GreedyStringTiling.Model
+﻿namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model
 {
   public class Match
   {

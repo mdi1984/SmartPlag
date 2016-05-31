@@ -9,9 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tokenizer", "Tokenizer", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Comparison", "Comparison", "{BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlag.Comparison.GreedyStringTiling", "SmartPlag.Comparison.GreedyStringTiling\SmartPlag.Comparison.GreedyStringTiling.csproj", "{4470E7D8-682D-4402-B225-7EBCE8770F31}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Algorithm", "Algorithm", "{4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlag.Comparison.GreedyStringTiling.Tests", "SmartPlag.Comparison.GreedyStringTiling.Tests\SmartPlag.Comparison.GreedyStringTiling.Tests.csproj", "{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlag.Comparison.Algorithm.GreedyStringTiling", "SmartPlag.Comparison.Algorithm.GreedyStringTiling\SmartPlag.Comparison.Algorithm.GreedyStringTiling.csproj", "{4470E7D8-682D-4402-B225-7EBCE8770F31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlag.Comparison.Algorithm.GreedyStringTiling.Tests", "SmartPlag.Comparison.Algorithm.GreedyStringTiling.Tests\SmartPlag.Comparison.Algorithm.GreedyStringTiling.Tests.csproj", "{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,7 +39,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{77C33B8C-023D-4E17-8A6F-AD0728ABB94E} = {3D0CB33B-F316-44AE-9BBC-236836E90AE4}
-		{4470E7D8-682D-4402-B225-7EBCE8770F31} = {BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}
-		{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A} = {BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}
+		{4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187} = {BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}
+		{4470E7D8-682D-4402-B225-7EBCE8770F31} = {4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187}
+		{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A} = {4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187}
 	EndGlobalSection
 EndGlobal

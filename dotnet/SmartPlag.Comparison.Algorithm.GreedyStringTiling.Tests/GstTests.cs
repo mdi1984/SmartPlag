@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SmartPlag.Comparison.GreedyStringTiling.Model;
+using SmartPlag.Comparison.Algorithm.GreedyStringTiling;
+using SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model;
 
-namespace SmartPlag.Comparison.GreedyStringTiling.Tests
+namespace SmartPlag.Comparison.GreedyStringTiling.Algorithm.Tests
 {
   [TestClass]
   public class GstTests
