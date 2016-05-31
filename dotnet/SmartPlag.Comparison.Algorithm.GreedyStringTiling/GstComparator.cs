@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SmartPlag.Comparison.GreedyStringTiling.Model;
+using SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model;
 
-namespace SmartPlag.Comparison.GreedyStringTiling
+namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling
 {
   public static class GstComparator
   {

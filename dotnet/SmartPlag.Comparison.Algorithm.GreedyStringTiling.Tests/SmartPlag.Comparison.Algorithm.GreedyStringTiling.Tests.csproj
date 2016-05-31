@@ -6,8 +6,8 @@
     <ProjectGuid>{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartPlag.Comparison.GreedyStringTiling.Tests</RootNamespace>
-    <AssemblyName>SmartPlag.Comparison.GreedyStringTiling.Tests</AssemblyName>
+    <RootNamespace>SmartPlag.Comparison.GreedyStringTiling.Algorithm.Tests</RootNamespace>
+    <AssemblyName>SmartPlag.Comparison.GreedyStringTiling.Algorithm.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartPlag.Comparison.GreedyStringTiling\SmartPlag.Comparison.GreedyStringTiling.csproj">
+    <ProjectReference Include="..\SmartPlag.Comparison.Algorithm.GreedyStringTiling\SmartPlag.Comparison.Algorithm.GreedyStringTiling.csproj">
       <Project>{4470e7d8-682d-4402-b225-7ebce8770f31}</Project>
-      <Name>SmartPlag.Comparison.GreedyStringTiling</Name>
+      <Name>SmartPlag.Comparison.Algorithm.GreedyStringTiling</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
