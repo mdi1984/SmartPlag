@@ -6,7 +6,7 @@ namespace SmartPlag.Tokenzier.CSharp.Model
   {
     public AssignmentResponse()
     {
-      this.StudentResults = new List<StudentTokenMap>();
+      this.StudentResults = new List<StudentResult>();
     }
 
     public AssignmentResponse(string title)
@@ -16,6 +16,6 @@ namespace SmartPlag.Tokenzier.CSharp.Model
     }
 
     public string Title { get; set; }
-    public List<StudentTokenMap> StudentResults { get; set; }
+    public List<StudentResult> StudentResults { get; set; }
   }
 }

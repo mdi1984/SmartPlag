@@ -31,18 +31,28 @@ namespace SmartPlag.Tokenzier.CSharp.Controllers
         var response = new AssignmentResponse(request.Title);
         foreach (var assignment in request.Assignments)
         {
-          var source = Encoding.UTF8.GetString(Convert.FromBase64String(assignment.Base64Source));
-          var tree = CSharpSyntaxTree.ParseText(source);
-          var root = (CompilationUnitSyntax)tree.GetRoot();
-          var tokens = root.DescendantTokens();
-
-          var studentResult = new StudentTokenMap(assignment.FirstName, assignment.LastName);
-          foreach (var token in tokens)
-          {
-            studentResult.Tokens.Add(new TokenWithPosition(token.RawKind, token.FullSpan.Start, token.FullSpan.End));
-          }
-
+          var studentResult = new StudentResult(assignment.FirstName, assignment.LastName);
           response.StudentResults.Add(studentResult);
+
+          if (assignment.Files == null)
+            continue;
+
+          foreach (var file in assignment.Files)
+          {
+            var source = Encoding.UTF8.GetString(Convert.FromBase64String(file.Base64Source));
+            var tree = CSharpSyntaxTree.ParseText(source);
+            var root = (CompilationUnitSyntax)tree.GetRoot();
+            var tokens = root.DescendantTokens();
+
+            var tokenMap = new StudentTokenMap(file.FileName);
+            studentResult.Files.Add(tokenMap);
+
+            foreach (var token in tokens)
+            {
+              tokenMap.Tokens.Add(new TokenWithPosition(token.RawKind, token.FullSpan.Start, token.FullSpan.End));
+            }
+
+          }
         }
 
         return new ObjectResult(response);
