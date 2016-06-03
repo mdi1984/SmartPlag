@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SmartPlag.Comparison.Service.GreedyStringTiling.Model
+namespace SmartPlag.Comparison.Service.GreedyStringTiling.Model.Request
 {
   public class TokennizedFile
   {
