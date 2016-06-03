@@ -2,15 +2,15 @@
 {
   public class Match
   {
-    internal Match(int patternPosition, int textPosition, int length)
+    internal Match(int patternIndex, int textIndex, int length)
     {
-      this.PatternPosition = patternPosition;
-      this.TextPosition = textPosition;
+      this.PatternIndex = patternIndex;
+      this.TextIndex = textIndex;
       this.Length = length;
     }
 
-    public int PatternPosition { get; private set; }
-    public int TextPosition { get; private set; }
+    public int PatternIndex { get; private set; }
+    public int TextIndex { get; private set; }
     public int Length { get; private set; }
   }
 }
