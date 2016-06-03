@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartPlag.Comparison.Algori
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SmartPlag.Comparison.Algorithm.GreedyStringTiling", "SmartPlag.Comparison.Algorithm.GreedyStringTiling\SmartPlag.Comparison.Algorithm.GreedyStringTiling.xproj", "{62077E8A-C145-4654-80ED-993E92E36F75}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SmartPlag.Comparison.Service.GreedyStringTiling", "SmartPlag.Comparison.Service.GreedyStringTiling\SmartPlag.Comparison.Service.GreedyStringTiling.xproj", "{C4C12329-512F-4290-BA8E-20D986BBC523}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{62077E8A-C145-4654-80ED-993E92E36F75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62077E8A-C145-4654-80ED-993E92E36F75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62077E8A-C145-4654-80ED-993E92E36F75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C12329-512F-4290-BA8E-20D986BBC523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C12329-512F-4290-BA8E-20D986BBC523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C12329-512F-4290-BA8E-20D986BBC523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C12329-512F-4290-BA8E-20D986BBC523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +48,6 @@ Global
 		{4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187} = {BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}
 		{FE6B7EDE-8873-40D7-BB95-FAA718ABA30A} = {4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187}
 		{62077E8A-C145-4654-80ED-993E92E36F75} = {4C6BF0DF-EFB8-4C2E-8BC0-945BD2728187}
+		{C4C12329-512F-4290-BA8E-20D986BBC523} = {BBBA6ADC-CEA4-433C-9E55-A59DBBBD6567}
 	EndGlobalSection
 EndGlobal

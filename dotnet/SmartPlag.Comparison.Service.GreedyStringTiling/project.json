@@ -13,7 +13,8 @@
     "Microsoft.Extensions.Logging": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc2-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc2-final",
-    "Swashbuckle": "6.0.0-beta9"
+    "Swashbuckle": "6.0.0-beta9",
+    "SmartPlag.Comparison.Algorithm.GreedyStringTiling": "0.0.1-*",
   },
 
   "tools": {
@@ -29,12 +30,7 @@
         "dotnet5.6",
         "dnxcore50",
         "portable-net45+win8"
-      ],
-      "dependencies": {
-        "SmartPlag.Comparison.Algorithm.GreedyStringTiling": {
-          "target": "project"
-        }
-      }
+      ]
     }
   },
 
