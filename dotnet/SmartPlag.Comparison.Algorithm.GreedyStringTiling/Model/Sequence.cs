@@ -10,6 +10,14 @@ namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model
       this.Tokens = tokens;
     }
 
-    internal IList<Token<T>> Tokens { get; private set; } 
+    internal IList<Token<T>> Tokens { get; private set; }
+
+    public void Reset()
+    {
+      foreach (var token in Tokens)
+      {
+        token.IsMarked = false;
+      }
+    }
   }
 }
