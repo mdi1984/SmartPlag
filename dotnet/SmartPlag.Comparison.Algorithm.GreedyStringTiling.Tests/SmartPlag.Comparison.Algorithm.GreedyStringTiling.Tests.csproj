@@ -53,12 +53,6 @@
     <Compile Include="GstTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SmartPlag.Comparison.Algorithm.GreedyStringTiling\SmartPlag.Comparison.Algorithm.GreedyStringTiling.csproj">
-      <Project>{4470e7d8-682d-4402-b225-7ebce8770f31}</Project>
-      <Name>SmartPlag.Comparison.Algorithm.GreedyStringTiling</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
