@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.SwaggerGen.Generator;
 
 namespace SmartPlag.Tokenzier.CSharp
 {
@@ -30,6 +31,16 @@ namespace SmartPlag.Tokenzier.CSharp
     {
       // Add framework services.
       services.AddMvc();
+
+      services.AddSwaggerGen(options =>
+      {
+        options.SingleApiVersion(new Info
+        {
+          Version = "v1",
+          Title = "SmartPlag C# Tokenizer"
+        });
+        options.DescribeAllEnumsAsStrings();
+      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +50,8 @@ namespace SmartPlag.Tokenzier.CSharp
       loggerFactory.AddDebug();
 
       app.UseMvc();
+      app.UseSwaggerGen();
+      app.UseSwaggerUi();
     }
   }
 }

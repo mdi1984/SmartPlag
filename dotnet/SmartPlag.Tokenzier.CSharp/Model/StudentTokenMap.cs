@@ -9,15 +9,14 @@ namespace SmartPlag.Tokenzier.CSharp.Model
       this.Tokens = new List<TokenWithPosition>();
     }
 
-    public StudentTokenMap(string firstName, string lastName)
+    public StudentTokenMap(string fileName)
       : this()
     {
-      this.FirstName = firstName;
-      this.LastName = lastName;
+      this.FileName = fileName;
     }
 
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
+    public string FileName { get; set; }
+
     public List<TokenWithPosition> Tokens { get; set; }
   }
 }
