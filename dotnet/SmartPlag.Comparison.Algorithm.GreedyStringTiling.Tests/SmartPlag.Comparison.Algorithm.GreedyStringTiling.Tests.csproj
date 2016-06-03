@@ -35,9 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SmartPlag.Comparison.Algorithm.GreedyStringTiling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SmartPlag.Comparison.Algorithm.GreedyStringTiling, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SmartPlag.Comparison.Algorithm.GreedyStringTiling\bin\Debug\SmartPlag.Comparison.Algorithm.GreedyStringTiling.dll</HintPath>
+      <HintPath>..\SmartPlag.Comparison.Algorithm.GreedyStringTiling\bin\Debug\net452\SmartPlag.Comparison.Algorithm.GreedyStringTiling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
