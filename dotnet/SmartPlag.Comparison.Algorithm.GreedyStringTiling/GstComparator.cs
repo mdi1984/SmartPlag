@@ -32,8 +32,8 @@ namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling
             if (j == maxMatch)
             {
               // TODO: add match only if no other match overlaps1
-              if (!matches.Any(m => (m.PatternPosition <= a && m.PatternPosition + m.Length - 1 >= a + j - 1) || 
-                    (m.TextPosition <= b && m.TextPosition + m.Length - 1 >= b + j - 1)))
+              if (!matches.Any(m => (m.PatternIndex <= a && m.PatternIndex + m.Length - 1 >= a + j - 1) || 
+                    (m.TextIndex <= b && m.TextIndex + m.Length - 1 >= b + j - 1)))
               {
                 matches.Add(new Match(a, b, j));
               }
@@ -52,8 +52,8 @@ namespace SmartPlag.Comparison.Algorithm.GreedyStringTiling
         {
           for (var a = 0; a < maxMatch - 1; a++)
           {
-            pattern.Tokens[item.PatternPosition + a].IsMarked = true;
-            text.Tokens[item.TextPosition + a].IsMarked = true;
+            pattern.Tokens[item.PatternIndex + a].IsMarked = true;
+            text.Tokens[item.TextIndex + a].IsMarked = true;
           }
 
           tiles.Add(item);

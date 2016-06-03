@@ -1,0 +1,18 @@
+﻿{
+  "version": "0.0.1-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.5.0-rc2-24027"
+  },
+
+  "frameworks": {
+    "netstandard1.5": { },
+    "net452": { }
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration Release"
+    ]
+  }
+}
