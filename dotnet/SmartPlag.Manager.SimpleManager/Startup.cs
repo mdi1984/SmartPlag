@@ -13,14 +13,13 @@ namespace SmartPlag.Manager.SimpleManager
   {
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddMvc();
     }
 
     public void Configure(IApplicationBuilder app)
     {
-      app.Run(async (context) =>
-      {
-        await context.Response.WriteAsync("Hello World!");
-      });
+      app.UseStaticFiles();
+      app.UseMvc();
     }
   }
 }
