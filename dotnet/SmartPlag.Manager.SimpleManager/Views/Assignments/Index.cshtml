@@ -1,0 +1,26 @@
+﻿@using System.Threading.Tasks
+@using SmartPlag.Manager.SimpleManager.Model
+@model SmartPlag.Manager.SimpleManager.Model.AssignmentsModel
+@{
+  Layout = null;
+  ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>title</title>
+</head>
+<body>
+<div>
+  <h1>Assigments:</h1>
+  <ul>
+    @foreach (var assignment in Model.Assignments)
+    {
+      <li>@assignment.Title</li>
+    }
+  </ul>
+
+  @Html.ActionLink("new Assignment", "NewAssignment")
+</div>
+</body>
+</html>
