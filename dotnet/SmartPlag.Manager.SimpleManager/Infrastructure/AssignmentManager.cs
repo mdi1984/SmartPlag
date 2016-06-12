@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SmartPlag.Manager.SimpleManager.Infrastructure.Model;
 
 namespace SmartPlag.Manager.SimpleManager.Infrastructure
@@ -19,7 +20,23 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
     {
       using (var context = this.contextFactory.Create())
       {
-        return context.Assignments.ToList();
+        return context.Assignments
+                      .Include(a => a.TokenizerService)
+                      .Include(a => a.ComparisonService)
+                      .ToList();
+      }
+    }
+
+    public Assignment GetAssignment(int id)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        return context.Assignments
+          .Include(a => a.TokenizerService)
+          .Include(a => a.ComparisonService)
+          .Include(a => a.Submissions)
+            .ThenInclude(s => s.Files)
+          .FirstOrDefault(a => a.Id == id);
       }
     }
 
@@ -45,6 +62,22 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
         {
           return false;
         }
+      }
+    }
+
+    public List<ComparisonService> GetComparisonServices()
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        return context.ComparisonServices.ToList();
+      }
+    }
+
+    public List<TokenizerService> GetTokenizerServices()
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        return context.TokenizerServices.ToList();
       }
     }
   }

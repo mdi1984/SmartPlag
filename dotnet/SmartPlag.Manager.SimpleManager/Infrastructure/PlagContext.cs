@@ -12,7 +12,8 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
     public DbSet<Assignment> Assignments { get; set; }
     public DbSet<Submission> Submissions { get; set; }
     public DbSet<SubmissionFile> SubmissionFiles { get; set; }
-
+    public DbSet<TokenizerService> TokenizerServices { get; set; }
+    public DbSet<ComparisonService> ComparisonServices { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);

@@ -19,17 +19,41 @@ namespace SmartPlag.Manager.SimpleManager
       services.AddDbContext<PlagContext>(options => options.UseSqlServer(connection));
       services.AddScoped<PlagContextFactory>();
       services.AddScoped<AssignmentManager>();
+      services.AddScoped<SubmissionManager>();
       services.AddMvc();
     }
 
     public void Configure(IApplicationBuilder app, PlagContext plagContext)
     {
+      app.UseDeveloperExceptionPage();
+
       plagContext.Database.EnsureCreated();
+      plagContext.Database.Migrate();
+
+      if (!plagContext.TokenizerServices.Any())
+      {
+        plagContext.TokenizerServices.Add(new Infrastructure.Model.TokenizerService
+        {
+          Name = "C# Tokenizer",
+          ServiceUrl = "http://localhost:1337/api/usw"
+        });
+        plagContext.SaveChanges();
+      }
+
+      if (!plagContext.ComparisonServices.Any())
+      {
+        plagContext.ComparisonServices.Add(new Infrastructure.Model.ComparisonService
+        {
+          Name = "GST-Comparator",
+          ServiceUrl = "http://localhost:1337/api/compare"
+        });
+        plagContext.SaveChanges();
+      }
 
       app.UseStaticFiles();
       app.UseMvc(routes =>
       {
-        routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+        routes.MapRoute("assignment", "{controller=Home}/{action=Index}/{id?}");
       });
     }
   }

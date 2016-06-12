@@ -1,0 +1,39 @@
+﻿@using System.Threading.Tasks
+@using SmartPlag.Manager.SimpleManager.Model
+@model SmartPlag.Manager.SimpleManager.Model.AssignmentsModel
+@{
+  Layout = null;
+  ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignments</title>
+</head>
+<body>
+  <div>
+    <h1>Assigments:</h1>
+    <table>
+      <thead>
+        <tr>
+          <td>Title</td>
+          <td>Tokenizer</td>
+          <td>Comparison</td>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var assignment in Model.Assignments)
+        {
+          <tr>
+            <td>@Html.ActionLink(assignment.Title, "edit", new {id = assignment.Id})</td>
+            <td>@assignment.TokenizerService.Name</td>
+            <td>@assignment.ComparisonService.Name</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    @Html.ActionLink("new Assignment", "New")
+  </div>
+</body>
+</html>

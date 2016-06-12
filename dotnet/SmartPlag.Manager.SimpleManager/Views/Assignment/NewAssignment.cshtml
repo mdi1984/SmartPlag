@@ -1,0 +1,51 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentModel
+
+@{
+  ViewBag.Title = "title";
+  Layout = null;
+}
+
+<h2>new Assignment</h2>
+@using (Html.BeginForm(Model.Assignment))
+{
+  <fieldset>
+    <legend>Assignment</legend>
+    <div class="editor-label">
+      @Html.LabelFor(a => a.Assignment.Title)
+    </div>
+    <div class="editor-field">
+      @Html.TextBoxFor(a => a.Assignment.Title)
+    </div>
+
+    <div class="editor-label">
+      @Html.LabelFor(a => a.Assignment.TokenizerService)
+    </div>
+
+    <div class="editor-field">
+      @Html.DropDownListFor(a => a.Assignment.TokenizerServiceId,
+                                Model.TokenizerServices.Select(s =>
+                                  new SelectListItem
+                                  {
+                                    Text = s.Name,
+                                    Value = s.Id.ToString()
+                                  }), "--select service--")
+    </div>
+
+    <div class="editor-label">
+      @Html.LabelFor(a => a.Assignment.ComparisonService)
+    </div>
+
+    <div class="editor-field">
+      @Html.DropDownListFor(a => a.Assignment.ComparisonServiceId,
+                                Model.ComparisonServices.Select(s =>
+                                  new SelectListItem
+                                  {
+                                    Text = s.Name,
+                                    Value = s.Id.ToString()
+                                  }), "--select service--")
+    </div>
+
+
+    <input type="submit" value="Create Assignment" />
+  </fieldset>
+}
