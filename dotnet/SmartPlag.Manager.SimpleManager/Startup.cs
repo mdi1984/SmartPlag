@@ -17,7 +17,8 @@ namespace SmartPlag.Manager.SimpleManager
     {
       var connection = @"Data Source=MDI-XMG\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManager;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
       services.AddDbContext<PlagContext>(options => options.UseSqlServer(connection));
-
+      services.AddScoped<PlagContextFactory>();
+      services.AddScoped<AssignmentManager>();
       services.AddMvc();
     }
 

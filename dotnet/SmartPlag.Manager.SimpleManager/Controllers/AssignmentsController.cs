@@ -14,20 +14,22 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
 {
   public class AssignmentsController : Controller
   {
-    private PlagContext context;
+    private AssignmentManager manager;
 
-    public AssignmentsController(PlagContext context)
+    public AssignmentsController(AssignmentManager manager)
     {
-      this.context = context;
+      this.manager = manager;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
-      var assignments = context.Assignments.ToList();
+      var assignments = manager.GetAssignments();
       var view = View(new AssignmentsModel {Assignments = assignments});
       return view;
     }
 
+    [HttpGet]
     public IActionResult NewAssignment()
     {
       return View("NewAssignment", new Assignment());
@@ -36,8 +38,7 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
     [HttpPost]
     public IActionResult NewAssignment(Assignment assignment)
     {
-      this.context.Assignments.Add(assignment);
-      this.context.SaveChanges();
+      this.manager.SaveOrUpdateAssignment(assignment);
       return Redirect("/assignments");
     }
   }
