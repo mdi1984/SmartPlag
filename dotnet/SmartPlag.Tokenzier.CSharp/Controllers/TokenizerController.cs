@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -12,6 +13,7 @@ namespace SmartPlag.Tokenzier.CSharp.Controllers
   public class TokenizerController : Controller
   {
     [HttpGet("mappings")]
+    [Authorize]
     public IActionResult Mappings()
     {
       var result = new List<Token>();

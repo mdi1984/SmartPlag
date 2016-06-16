@@ -23,7 +23,8 @@ namespace SmartPlag.Identity.Model
           {
             StandardScopes.OpenId.Name,
             StandardScopes.Profile.Name,
-            "manager"
+            "manager",
+            "tokenizer"
           },
         },
         new Client
@@ -39,7 +40,8 @@ namespace SmartPlag.Identity.Model
           {
             StandardScopes.OpenId.Name,
             StandardScopes.Profile.Name,
-            "manager"
+            "manager",
+            "tokenizer"
           },
         }
 

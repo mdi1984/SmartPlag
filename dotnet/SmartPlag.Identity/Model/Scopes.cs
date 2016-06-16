@@ -18,6 +18,13 @@ namespace SmartPlag.Identity.Model
             DisplayName = "Smartplag Manager",
             Description = "-add description-",
             Type = ScopeType.Resource
+        },
+        new Scope
+        {
+            Name = "tokenizer",
+            DisplayName = "Smartplag Tokenizer",
+            Description = "-add description-",
+            Type = ScopeType.Resource
         }
       };
     }
