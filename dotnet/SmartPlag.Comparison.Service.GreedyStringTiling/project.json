@@ -16,6 +16,9 @@
     "Swashbuckle": "6.0.0-beta9",
     "SmartPlag.Comparison.Algorithm.GreedyStringTiling": "0.0.1-*",
     "System.Linq.Queryable": "4.0.1-rc2-24027",
+    "Microsoft.AspNetCore.Authorization": "1.0.0-rc2-final",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0-rc2-305061149",
+    "IdentityServer4.AccessTokenValidation": "1.0.0-beta8"
   },
 
   "tools": {

@@ -24,6 +24,7 @@ namespace SmartPlag.Identity.Model
             StandardScopes.OpenId.Name,
             StandardScopes.Profile.Name,
             "manager",
+            "comparison",
             "tokenizer"
           },
         },
@@ -41,6 +42,7 @@ namespace SmartPlag.Identity.Model
             StandardScopes.OpenId.Name,
             StandardScopes.Profile.Name,
             "manager",
+            "comparison",
             "tokenizer"
           },
         }

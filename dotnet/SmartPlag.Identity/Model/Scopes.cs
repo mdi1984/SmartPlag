@@ -15,14 +15,21 @@ namespace SmartPlag.Identity.Model
         new Scope
         {
             Name = "manager",
-            DisplayName = "Smartplag Manager",
+            DisplayName = "Smartplag Manager Service",
             Description = "-add description-",
             Type = ScopeType.Resource
         },
         new Scope
         {
             Name = "tokenizer",
-            DisplayName = "Smartplag Tokenizer",
+            DisplayName = "Smartplag Tokenizer Service",
+            Description = "-add description-",
+            Type = ScopeType.Resource
+        },
+        new Scope
+        {
+            Name = "comparison",
+            DisplayName = "Smartplag Comparison Service",
             Description = "-add description-",
             Type = ScopeType.Resource
         }
