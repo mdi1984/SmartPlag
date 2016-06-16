@@ -48,7 +48,13 @@ namespace SmartPlag.Manager.SimpleManager
         AutomaticAuthenticate = true
       });
 
-      app.UseMvc();
+      //app.UseMvc();
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
+      });
     }
   }
 }
