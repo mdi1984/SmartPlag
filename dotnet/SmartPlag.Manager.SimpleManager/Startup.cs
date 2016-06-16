@@ -4,57 +4,40 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartPlag.Manager.SimpleManager.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace SmartPlag.Manager.SimpleManager
 {
-  public class Startup
-  {
-    public void ConfigureServices(IServiceCollection services)
+    public class Startup
     {
-      var connection = @"Data Source=MDI-XMG\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManager;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-      services.AddDbContext<PlagContext>(options => options.UseSqlServer(connection));
-      services.AddScoped<PlagContextFactory>();
-      services.AddScoped<AssignmentManager>();
-      services.AddScoped<SubmissionManager>();
-      services.AddMvc();
-    }
-
-    public void Configure(IApplicationBuilder app, PlagContext plagContext)
-    {
-      app.UseDeveloperExceptionPage();
-
-      plagContext.Database.EnsureCreated();
-      plagContext.Database.Migrate();
-
-      if (!plagContext.TokenizerServices.Any())
-      {
-        plagContext.TokenizerServices.Add(new Infrastructure.Model.TokenizerService
+        public Startup(IHostingEnvironment env)
         {
-          Name = "C# Tokenizer",
-          ServiceUrl = "http://localhost:1337/api/usw"
-        });
-        plagContext.SaveChanges();
-      }
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
-      if (!plagContext.ComparisonServices.Any())
-      {
-        plagContext.ComparisonServices.Add(new Infrastructure.Model.ComparisonService
+        public IConfigurationRoot Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
         {
-          Name = "GST-Comparator",
-          ServiceUrl = "http://localhost:1337/api/compare"
-        });
-        plagContext.SaveChanges();
-      }
+            // Add framework services.
+            services.AddMvc();
+        }
 
-      app.UseStaticFiles();
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute("assignment", "{controller=Home}/{action=Index}/{id?}");
-      });
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            app.UseMvc();
+        }
     }
-  }
 }
