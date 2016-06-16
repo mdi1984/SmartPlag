@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using CryptoHelper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,104 +13,52 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenIddict;
+using Microsoft.Extensions.Logging;
 using SmartPlag.Identity.Model;
 
 namespace SmartPlag.Identity
 {
   public class Startup
   {
-    public void ConfigureServices(IServiceCollection services)
+    private readonly IHostingEnvironment _environment;
+
+    public Startup(IHostingEnvironment env)
     {
-      var configuration = new ConfigurationBuilder()
-                .AddJsonFile("config.json")
-                .Build();
+      this._environment = env;
 
-      // TODO: Check if we need this
-      services.AddMvc();
+      var builder = new ConfigurationBuilder()
+        .SetBasePath(env.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+        .AddEnvironmentVariables();
 
-      // add entity framework using the config connection string
-      services.AddEntityFrameworkSqlServer()
-        .AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"]));
-
-
-      // add identity
-      services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
-
-      // add OpenIddict
-      services.AddOpenIddict<ApplicationUser, IdentityRole, ApplicationDbContext>()
-          .DisableHttpsRequirement()
-          .UseJsonWebTokens();
+      Configuration = builder.Build();
     }
 
-    public async void Configure(IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public IConfigurationRoot Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
     {
-      app.UseDeveloperExceptionPage();
-      app.UseOpenIddict();
+      var cert = new X509Certificate2(Path.Combine(_environment.ContentRootPath, "idsrv3test.pfx"), "idsrv3test");
 
-      using (var context = new ApplicationDbContext(
-        app.ApplicationServices.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
+      var builder = services.AddIdentityServer(options =>
       {
-        context.Database.EnsureCreated();
-        if (!context.Applications.Any())
-        {
-          context.Applications.Add(new OpenIddictApplication
-          {
-            Id = "smartplag-simplemanager",
-            DisplayName = "SmartPlag SimpleManager",
-            RedirectUri = string.Empty,
-            LogoutRedirectUri = string.Empty,
-            Secret = Crypto.HashPassword("super_secret_manager_password"),
-            Type = OpenIddictConstants.ClientTypes.Confidential
-          });
-        }
-
-        context.SaveChanges();
-      }
-
-      // use jwt bearer authentication
-      app.UseJwtBearerAuthentication(new JwtBearerOptions
-      {
-        AutomaticAuthenticate = true,
-        AutomaticChallenge = true,
-        RequireHttpsMetadata = false,
-#if DEBUG
-        Audience = "http://localhost:2406/",
-        Authority = "http://localhost:2406/"
-#else
-        Audience = "some-azure-url",
-        Authority = "some-azure-url"
-#endif
+        options.RequireSsl = !this._environment.IsDevelopment();
       });
 
-      var email = "mdi1984@gmail.com";
-      ApplicationUser user;
-      if (await userManager.FindByEmailAsync(email) == null)
-      {
-        // use the create rather than addorupdate so can set password
-        user = new ApplicationUser
-        {
-          UserName = email,
-          Email = email,
-          EmailConfirmed = true
-        };
-        await userManager.CreateAsync(user, "SuperPass");
-      }
+      builder.SetSigningCredentials(cert);
+      builder.AddInMemoryClients(Clients.Get());
+      builder.AddInMemoryScopes(Scopes.Get());
+      builder.AddInMemoryUsers(Users.Get());
+    }
 
-      user = await userManager.FindByEmailAsync(email);
-      var roleName = "Administrator";
-      if (await roleManager.FindByNameAsync(roleName) == null)
-      {
-        await roleManager.CreateAsync(new IdentityRole() { Name = roleName });
-      }
+    public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+    {
+      loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+      loggerFactory.AddDebug();
 
-      if (!await userManager.IsInRoleAsync(user, roleName))
-      {
-        await userManager.AddToRoleAsync(user, roleName);
-      }
+      app.UseDeveloperExceptionPage();
+      app.UseIdentityServer();
     }
   }
 }
