@@ -48,16 +48,51 @@ namespace SmartPlag.Manager.SimpleManager
         app.UseExceptionHandler("/Home/Error");
       }
 
-      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-      app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+      app.UseStaticFiles();
+
+      // use this for pure api stuff
+      //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      //app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+      //{
+      //  Authority = "http://localhost:5000",
+      //  RequireHttpsMetadata = false,
+      //  ScopeName = "manager",
+      //  AdditionalScopes = new []
+      //  {
+      //    "fullaccess"
+      //  },
+      //  AutomaticAuthenticate = true
+      //});
+
+      app.UseCookieAuthentication(new CookieAuthenticationOptions
       {
-        Authority = "http://localhost:5000",
-        RequireHttpsMetadata = false,
-        ScopeName = "manager",
+        AuthenticationScheme = "Cookies",
         AutomaticAuthenticate = true
       });
 
-      app.UseStaticFiles();
+      var oidcOptions = new OpenIdConnectOptions
+      {
+        AuthenticationScheme = "oidc",
+        SignInScheme = "Cookies",
+
+        Authority = "http://localhost:5000",
+        RequireHttpsMetadata = false,
+        PostLogoutRedirectUri = "http://localhost:5003/",
+        ClientId = "spmanager",
+        ClientSecret = "managerSecret",
+        ResponseType = "code id_token",
+        GetClaimsFromUserInfoEndpoint = true,
+        SaveTokens = true
+      };
+
+      oidcOptions.Scope.Clear();
+      oidcOptions.Scope.Add("openid");
+      oidcOptions.Scope.Add("profile");
+      oidcOptions.Scope.Add("fullaccess");
+      oidcOptions.Scope.Add("manager");
+      oidcOptions.Scope.Add("tokenizer");
+
+      app.UseOpenIdConnectAuthentication(oidcOptions);
 
       app.UseMvc(routes =>
       {
