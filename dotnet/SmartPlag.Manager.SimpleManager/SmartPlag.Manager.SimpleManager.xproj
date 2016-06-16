@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>2c785e7f-f100-46e2-9e38-1a3f37049d10</ProjectGuid>
+    <ProjectGuid>35da0003-85d7-4b72-bed7-78aa75a77aae</ProjectGuid>
     <RootNamespace>SmartPlag.Manager.SimpleManager</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

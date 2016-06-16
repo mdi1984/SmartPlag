@@ -38,22 +38,32 @@ namespace SmartPlag.Manager.SimpleManager
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
 
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+        app.UseBrowserLink();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Home/Error");
+      }
+
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
       {
         Authority = "http://localhost:5000",
         RequireHttpsMetadata = false,
-
         ScopeName = "manager",
         AutomaticAuthenticate = true
       });
 
-      //app.UseMvc();
+      app.UseStaticFiles();
+
       app.UseMvc(routes =>
       {
         routes.MapRoute(
-            name: "default",
-            template: "{controller=Home}/{action=Index}/{id?}");
+                  name: "default",
+                  template: "{controller=Home}/{action=Index}/{id?}");
       });
     }
   }
