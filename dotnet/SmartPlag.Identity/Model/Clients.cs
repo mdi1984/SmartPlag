@@ -15,6 +15,11 @@ namespace SmartPlag.Identity.Model
           ClientId = "spmanager",
           ClientName = "SmartPlag Manager",
           AllowedGrantTypes = GrantTypes.Hybrid,
+
+          RedirectUris = new List<string>
+          {
+              "http://localhost:5003/signin-oidc"
+          },
           ClientSecrets = new List<Secret>
           {
             new Secret("managerSecret".Sha256())
