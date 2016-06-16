@@ -53,7 +53,7 @@ namespace SmartPlag.Tokenzier.CSharp
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
       app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
       {
-        Authority = "http://localhost:11503",
+        Authority = "http://localhost:5000",
         RequireHttpsMetadata = false,
 
         ScopeName = "tokenizer",
