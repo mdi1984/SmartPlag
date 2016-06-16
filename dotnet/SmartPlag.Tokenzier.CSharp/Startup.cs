@@ -57,6 +57,10 @@ namespace SmartPlag.Tokenzier.CSharp
         RequireHttpsMetadata = false,
 
         ScopeName = "tokenizer",
+        AdditionalScopes = new[]
+        {
+          "fullaccess"
+        },
         AutomaticAuthenticate = true
       });
 

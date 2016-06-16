@@ -25,7 +25,8 @@ namespace SmartPlag.Identity.Model
             StandardScopes.Profile.Name,
             "manager",
             "comparison",
-            "tokenizer"
+            "tokenizer",
+            "fullaccess"
           },
         },
         new Client
@@ -43,7 +44,8 @@ namespace SmartPlag.Identity.Model
             StandardScopes.Profile.Name,
             "manager",
             "comparison",
-            "tokenizer"
+            "tokenizer",
+            "fullaccess"
           },
         }
 

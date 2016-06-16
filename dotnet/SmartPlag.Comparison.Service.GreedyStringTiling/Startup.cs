@@ -55,6 +55,10 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling
         RequireHttpsMetadata = false,
 
         ScopeName = "comparison",
+        AdditionalScopes = new []
+        {
+          "fullaccess"
+        },
         AutomaticAuthenticate = true
       });
 

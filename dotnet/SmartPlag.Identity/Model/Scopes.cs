@@ -17,7 +17,7 @@ namespace SmartPlag.Identity.Model
             Name = "manager",
             DisplayName = "Smartplag Manager Service",
             Description = "-add description-",
-            Type = ScopeType.Resource
+            Type = ScopeType.Resource,
         },
         new Scope
         {
@@ -32,6 +32,13 @@ namespace SmartPlag.Identity.Model
             DisplayName = "Smartplag Comparison Service",
             Description = "-add description-",
             Type = ScopeType.Resource
+        },
+        new Scope
+        {
+          Name = "fullaccess",
+          DisplayName = "Full Service Access",
+          Description = "-add description",
+          Type = ScopeType.Resource
         }
       };
     }
