@@ -26,6 +26,7 @@ namespace SmartPlag.Tokenzier.CSharp.Controllers
     }
 
     [HttpPost]
+    [Authorize]
     public IActionResult Post([FromBody] AssignmentRequest request)
     {
       try
