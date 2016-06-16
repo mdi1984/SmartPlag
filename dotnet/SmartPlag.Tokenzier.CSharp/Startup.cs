@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,16 @@ namespace SmartPlag.Tokenzier.CSharp
     {
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
+
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+      app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+      {
+        Authority = "http://localhost:5000",
+        RequireHttpsMetadata = false,
+
+        ScopeName = "tokenizer",
+        AutomaticAuthenticate = true
+      });
 
       app.UseMvc();
       app.UseSwaggerGen();

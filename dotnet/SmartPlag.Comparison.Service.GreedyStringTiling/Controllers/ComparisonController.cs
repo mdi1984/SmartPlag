@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartPlag.Comparison.Algorithm.GreedyStringTiling;
 using SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model;
@@ -13,6 +14,7 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
   public class ComparisonController
   {
     [HttpPost]
+    [Authorize]
     public IActionResult SimpleComparison([FromBody] ComparisonRequest request)
     {
       try
