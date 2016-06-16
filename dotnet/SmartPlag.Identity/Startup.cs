@@ -50,6 +50,16 @@ namespace SmartPlag.Identity
       builder.AddInMemoryClients(Clients.Get());
       builder.AddInMemoryScopes(Scopes.Get());
       builder.AddInMemoryUsers(Users.Get());
+
+      // for the UI
+      services
+          .AddMvc()
+          .AddRazorOptions(razor =>
+          {
+            razor.ViewLocationExpanders.Add(new Host.UI.CustomViewLocationExpander());
+          });
+
+      services.AddTransient<Host.UI.Login.LoginService>();
     }
 
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -58,7 +68,18 @@ namespace SmartPlag.Identity
       loggerFactory.AddDebug();
 
       app.UseDeveloperExceptionPage();
+
+      app.UseCookieAuthentication(new CookieAuthenticationOptions
+      {
+        AuthenticationScheme = "Temp",
+        AutomaticAuthenticate = false,
+        AutomaticChallenge = false
+      });
+
       app.UseIdentityServer();
+
+      app.UseStaticFiles();
+      app.UseMvcWithDefaultRoute();
     }
   }
 }
