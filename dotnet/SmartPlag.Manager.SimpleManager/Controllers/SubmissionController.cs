@@ -37,11 +37,71 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
       return View("Edit");
     }
 
+    public async Task<IActionResult> Details(int assignmentId, int id)
+    {
+      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
+      var submission = await this.submissionManager.GetSubmissionByIdAsync(id, user);
+
+      return View(submission);
+    }
+
+    public async Task<IActionResult> DeleteFile(int id, int assignmentId, int submissionid)
+    {
+      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
+      var success = await this.submissionManager.DeleteFileAsync(id, user);
+      if (success)
+      {
+        return RedirectToAction("Details", new { assignmentId = assignmentId, id = submissionid });
+      }
+
+      return BadRequest();
+    }
+
+    public async Task<IActionResult> NewFile(int assignmentId, int id, ICollection<IFormFile> files)
+    {
+      if (files.Count == 0)
+        return new BadRequestObjectResult(new { error = "No files selected" });
+
+      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
+      // TODO: Validate user
+
+      var submissionFiles = new List<StudentFile>();
+
+      // add files:
+      // TODO: Check for supported File Extensions 
+      foreach (var file in files)
+      {
+        var submissionFile = new StudentFile
+        {
+          SubmissionId = id,
+          FileName = file.FileName
+        };
+
+        // TODO: Check encoding etc. Assume UTF-8 for now
+        using (var fileStream = file.OpenReadStream())
+        {
+          var buffer = new byte[fileStream.Length];
+          fileStream.Read(buffer, 0, int.MaxValue);
+          var content = System.Text.Encoding.UTF8.GetString(buffer);
+          submissionFile.Content = content;
+        }
+
+        submissionFiles.Add(submissionFile);
+      }
+
+      await this.submissionManager.SaveFilesAsync(submissionFiles);
+
+      return RedirectToAction("Details", new { assignmentId = assignmentId, id = id });
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create(int assignmentId, EditSubmissionModel model, ICollection<IFormFile> files)
     {
       if (files.Count == 0)
         return new BadRequestObjectResult(new { error = "No files selected" });
+
+      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
+      // TODO: Validate user
 
       var submission = new Submission
       {
@@ -82,7 +142,6 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
 
       await this.submissionManager.SaveFilesAsync(submissionFiles);
 
-      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
       return RedirectToAction("Index", new { assignmentId = assignmentId });
     }
   }

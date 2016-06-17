@@ -58,6 +58,49 @@ namespace SmartPlag.Manager.Simple.EF
       }
     }
 
+    public async Task<Submission> GetSubmissionByIdAsync(int id, string user)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        try
+        {
+          var submission = await context.Submissions
+                             .Include(s => s.Files)
+                             .Include(s => s.Assignment)
+                             .FirstOrDefaultAsync(s => s.Assignment.Owner.Equals(user) && s.Id == id);
+
+          return submission;
+        }
+        catch (Exception ex)
+        {
+          return null;
+        }
+      }
+    }
+
+    public async Task<bool> DeleteFileAsync(int id, string user)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        try
+        {
+          var dbFile = await context.Files
+                         .FirstOrDefaultAsync(f => f.Submission.Assignment.Owner.Equals(user) && f.Id == id);
+          if (dbFile != null)
+          {
+            context.Entry(dbFile).State = EntityState.Deleted;
+          }
+
+          await context.SaveChangesAsync();
+          return true;
+        }
+        catch (Exception ex)
+        {
+          return false;
+        }
+      }
+    }
+
     public async Task<bool> SaveFilesAsync(List<StudentFile> submissionFiles)
     {
       using (var context = this.contextFactory.Create())

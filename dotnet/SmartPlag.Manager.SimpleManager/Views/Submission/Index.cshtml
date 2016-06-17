@@ -11,7 +11,7 @@
 {
   assignmentId = Model.Assignment.Id,
   controller = "Submission",
-  action =  "Create"
+  action = "Create"
 }, new { @class = "btn btn-success" })
 
 
@@ -29,16 +29,22 @@
       <tr>
         <td style="vertical-align:middle">@submission.FirstName</td>
         <td style="vertical-align:middle">@submission.LastName</td>
-        @*<td>
-            @Html.RouteLink("", "assignmentRoute", new { assignmentId = assignment.Id, controller = "Submission" }, new { @class = "btn btn-primary glyphicon glyphicon-folder-open" })
-            @Html.ActionLink("", "Edit", new { id = assignment.Id }, new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+        <td>
+          @Html.RouteLink("", "assignmentRoute", new
+          {
+            assignmentId = Model.Assignment.Id,
+            controller = "Submission",
+            action= "Details",
+            id = submission.Id
+          }, new { @class = "btn btn-primary glyphicon glyphicon-folder-open" })
+          @*@Html.ActionLink("", "Edit", new { id = assignment.Id }, new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
             @Html.ActionLink("", "Delete", new { id = assignment.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
 
             @if (assignment.Submissions.Count >= 2)
             {
               @Html.ActionLink("Evaluate", "Evaluate", new { id = assignment.Id }, new { @class = "btn btn-success" })
-            }
-          </td>*@
+            }*@
+        </td>
       </tr>
     }
   </tbody>
