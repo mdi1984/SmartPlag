@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SmartPlag.Manager.Simple.EF;
+using SmartPlag.Manager.Simple.EF.Infrastructure;
 
 namespace SmartPlag.Manager.SimpleManager
 {
@@ -33,6 +34,8 @@ namespace SmartPlag.Manager.SimpleManager
     {
 
       services.AddDbContext<PlagContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+      services.AddScoped<PlagDbContextFactory>();
+      services.AddScoped<AssignmentManager>();
       services.AddMvc();
     }
 
