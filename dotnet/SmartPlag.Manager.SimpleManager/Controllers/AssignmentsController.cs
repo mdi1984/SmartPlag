@@ -30,7 +30,7 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
         ViewBag.Username = user;
         var assignments = await this.manager.GetAssignmentsAsync(user);
 
-        return View(new AssignmentModel
+        return View(new AssignmentListModel
         {
           Assignments = assignments.ToList()
         });

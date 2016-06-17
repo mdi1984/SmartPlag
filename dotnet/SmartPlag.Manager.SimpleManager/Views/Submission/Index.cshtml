@@ -1,0 +1,45 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.SubmissionListModel
+
+@{
+  ViewData["Title"] = $"Submissions - {Model.Assignment.Title}";
+}
+
+<h2>@($"Submission for Assignment {Model.Assignment.Title}")</h2>
+
+
+@Html.RouteLink("New Submission", "assignmentRoute", new
+{
+  assignmentId = Model.Assignment.Id,
+  controller = "Submission",
+  action =  "Create"
+}, new { @class = "btn btn-success" })
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var submission in Model.Assignment.Submissions)
+      {
+      <tr>
+        <td style="vertical-align:middle">@submission.FirstName</td>
+        <td style="vertical-align:middle">@submission.LastName</td>
+        @*<td>
+            @Html.RouteLink("", "assignmentRoute", new { assignmentId = assignment.Id, controller = "Submission" }, new { @class = "btn btn-primary glyphicon glyphicon-folder-open" })
+            @Html.ActionLink("", "Edit", new { id = assignment.Id }, new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+            @Html.ActionLink("", "Delete", new { id = assignment.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+
+            @if (assignment.Submissions.Count >= 2)
+            {
+              @Html.ActionLink("Evaluate", "Evaluate", new { id = assignment.Id }, new { @class = "btn btn-success" })
+            }
+          </td>*@
+      </tr>
+    }
+  </tbody>
+</table>

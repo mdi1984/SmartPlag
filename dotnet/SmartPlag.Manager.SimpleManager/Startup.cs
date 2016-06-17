@@ -36,6 +36,7 @@ namespace SmartPlag.Manager.SimpleManager
       services.AddDbContext<PlagContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
       services.AddScoped<PlagDbContextFactory>();
       services.AddScoped<AssignmentManager>();
+      services.AddScoped<SubmissionManager>();
       services.AddMvc();
     }
 
@@ -106,6 +107,10 @@ namespace SmartPlag.Manager.SimpleManager
         routes.MapRoute(
                   name: "default",
                   template: "{controller=Home}/{action=Index}/{id?}");
+
+        routes.MapRoute(
+                  name: "assignmentRoute",
+                  template: "Assignments/{assignmentId?}/{controller=Submission}/{action=Index}");
       });
 
       dbContext.Database.EnsureCreated();
