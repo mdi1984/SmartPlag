@@ -8,9 +8,10 @@ using SmartPlag.Manager.Simple.EF;
 namespace SmartPlag.Manager.Simple.EF.Migrations
 {
     [DbContext(typeof(PlagContext))]
-    partial class PlagContextModelSnapshot : ModelSnapshot
+    [Migration("20160617105933_AddServices")]
+    partial class AddServices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -21,21 +22,13 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ComparisonServiceId");
-
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("Owner");
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("TokenizerServiceId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ComparisonServiceId");
-
-                    b.HasIndex("TokenizerServiceId");
 
                     b.ToTable("Assignments");
                 });
@@ -46,10 +39,6 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BaseUrl");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -97,26 +86,9 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
 
                     b.Property<string>("BaseUrl");
 
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
                     b.HasKey("Id");
 
                     b.ToTable("TokenizerServices");
-                });
-
-            modelBuilder.Entity("SmartPlag.Manager.Simple.EF.Model.Assignment", b =>
-                {
-                    b.HasOne("SmartPlag.Manager.Simple.EF.Model.ComparisonService")
-                        .WithMany()
-                        .HasForeignKey("ComparisonServiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("SmartPlag.Manager.Simple.EF.Model.TokenizerService")
-                        .WithMany()
-                        .HasForeignKey("TokenizerServiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SmartPlag.Manager.Simple.EF.Model.StudentFile", b =>

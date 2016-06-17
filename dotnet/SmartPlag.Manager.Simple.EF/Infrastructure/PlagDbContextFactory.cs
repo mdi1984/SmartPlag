@@ -12,7 +12,7 @@ namespace SmartPlag.Manager.Simple.EF.Infrastructure
     public PlagContext Create()
     {
       var connectionStr =
-        "Data Source=MDI-XMG\\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManagerV2;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        @"Data Source=MDI-PC\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManager;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
       var optionBuilder = new DbContextOptionsBuilder<PlagContext>();
       optionBuilder.UseSqlServer(connectionStr);
       return new PlagContext(optionBuilder.Options);

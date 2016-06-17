@@ -8,9 +8,10 @@ using SmartPlag.Manager.Simple.EF;
 namespace SmartPlag.Manager.Simple.EF.Migrations
 {
     [DbContext(typeof(PlagContext))]
-    partial class PlagContextModelSnapshot : ModelSnapshot
+    [Migration("20160617110058_AddServicesToAssignment")]
+    partial class AddServicesToAssignment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -46,10 +47,6 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BaseUrl");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -96,10 +93,6 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BaseUrl");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

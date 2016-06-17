@@ -18,7 +18,9 @@ namespace SmartPlag.Identity.Model
                 Password = "superPass",
                 Claims = new []
                 {
-                    new Claim(JwtClaimTypes.Name, "Markus Dietrich"),
+                    new Claim(JwtClaimTypes.Name, "mdi1984@gmail.com"),
+                    new Claim(JwtClaimTypes.ClientId, "1"), 
+                    new Claim("UserId", "1"), 
                     // TODO: UserId or something like that... 
                 }
             }

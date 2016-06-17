@@ -12,7 +12,7 @@ namespace SmartPlag.Manager.Simple.EF
     // uncomment to enable migrations
     // public PlagContext()
     // { }
-       
+
     // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     // {
     //   optionsBuilder.UseSqlServer(
@@ -26,5 +26,7 @@ namespace SmartPlag.Manager.Simple.EF
     public DbSet<Assignment> Assignments { get; set; }
     public DbSet<Submission> Submissions { get; set; }
     public DbSet<StudentFile> Files { get; set; }
+    public DbSet<TokenizerService> TokenizerServices { get; set; }
+    public DbSet<ComparisonService> ComparisonServices { get; set; }
   }
 }

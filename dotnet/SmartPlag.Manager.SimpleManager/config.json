@@ -1,7 +1,7 @@
 ﻿{
   "Data": {
     "DefaultConnection": {
-      "ConnectionString": "Data Source=MDI-XMG\\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManagerV2;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+      "ConnectionString": "Data Source=MDI-PC\\SQLEXPRESS;Initial Catalog=SmartPlagSimpleManager;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
     }
   }
 }

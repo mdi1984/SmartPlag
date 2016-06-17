@@ -1,6 +1,40 @@
-﻿@{
+﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentModel
+@{
   ViewData["Title"] = "Home Page";
 }
 <div>
-  <h1>Assignments</h1>    
+  <h2>@($"{ViewBag.Username}'s Assignments")</h2>
+
+  @Html.ActionLink("Create Assignment", "Create", "Assignments", null, new { @class = "btn btn-success" })
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Comparison Service</th>
+        <th>Tokenizer Service</th>
+        <th># Submissions</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var assignment in Model.Assignments)
+      {
+        <tr>
+          <td style="vertical-align:middle">@assignment.Title</td>
+          <td style="vertical-align:middle">@assignment.ComparisonService.Name</td>
+          <td style="vertical-align:middle">@assignment.TokenizerService.Name</td>
+          <td style="vertical-align:middle">@assignment.Submissions.Count</td>
+          <td>
+            @Html.ActionLink("", "Edit", new { id = assignment.Id }, new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
+            @Html.ActionLink("", "Delete", new { id = assignment.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+            @if (assignment.Submissions.Count >= 2)
+            {
+              @Html.ActionLink("Evaluate", "Evaluate", new { id = assignment.Id }, new { @class = "btn btn-success" })
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </div>

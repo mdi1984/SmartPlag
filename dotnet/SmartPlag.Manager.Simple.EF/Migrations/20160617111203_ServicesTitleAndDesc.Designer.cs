@@ -8,9 +8,10 @@ using SmartPlag.Manager.Simple.EF;
 namespace SmartPlag.Manager.Simple.EF.Migrations
 {
     [DbContext(typeof(PlagContext))]
-    partial class PlagContextModelSnapshot : ModelSnapshot
+    [Migration("20160617111203_ServicesTitleAndDesc")]
+    partial class ServicesTitleAndDesc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")

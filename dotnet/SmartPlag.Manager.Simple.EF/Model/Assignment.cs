@@ -11,5 +11,9 @@ namespace SmartPlag.Manager.Simple.EF.Model
     public ICollection<Submission> Submissions { get; set; }
     public string Owner { get; set; }
     public DateTime Created { get; set; } = DateTime.UtcNow;
+    public TokenizerService TokenizerService { get; set; }
+    public int TokenizerServiceId { get; set; }
+    public int ComparisonServiceId { get; set; }
+    public ComparisonService ComparisonService { get; set; }
   }
 }

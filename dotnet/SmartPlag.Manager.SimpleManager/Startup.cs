@@ -109,7 +109,7 @@ namespace SmartPlag.Manager.SimpleManager
       });
 
       dbContext.Database.EnsureCreated();
-      dbContext.Database.Migrate();
+      //dbContext.Database.Migrate();
     }
   }
 }
