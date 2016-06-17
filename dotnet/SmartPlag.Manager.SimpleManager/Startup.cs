@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SmartPlag.Manager.Simple.EF;
 
 namespace SmartPlag.Manager.SimpleManager
 {
@@ -19,6 +21,7 @@ namespace SmartPlag.Manager.SimpleManager
           .SetBasePath(env.ContentRootPath)
           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
           .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+          .AddJsonFile("config.json")
           .AddEnvironmentVariables();
       Configuration = builder.Build();
     }
@@ -28,7 +31,8 @@ namespace SmartPlag.Manager.SimpleManager
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      // Add framework services.
+
+      services.AddDbContext<PlagContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
       services.AddMvc();
     }
 
