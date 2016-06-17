@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,8 +23,13 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
     }
 
     [Authorize]
-    public IActionResult Contact()
+    public async Task<IActionResult> Contact()
     {
+      // use accesstoken to query other apis
+      ViewBag.IdentityToken = await HttpContext.Authentication.GetTokenAsync("id_token");
+      ViewBag.AccessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+      ViewBag.TokenizerToken = await HttpContext.Authentication.GetTokenAsync("tokenizer");
+
       ViewData["Message"] = "Your contact page.";
 
       return View();

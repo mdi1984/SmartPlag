@@ -59,7 +59,8 @@ namespace SmartPlag.Tokenzier.CSharp
         ScopeName = "tokenizer",
         AdditionalScopes = new[]
         {
-          "fullaccess"
+          "fullaccess",
+          "manager"
         },
         AutomaticAuthenticate = true
       });
