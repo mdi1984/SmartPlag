@@ -117,5 +117,50 @@ namespace SmartPlag.Manager.Simple.EF
         return false;
       }
     }
+
+    public async Task<bool> SetEvaluationStateAsync(int id, string owner, AssignmentState state)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        try
+        {
+          var dbAssignment = await context.Assignments.FirstOrDefaultAsync(a => a.Id == id && a.Owner.Equals(owner));
+          if (dbAssignment != null)
+          {
+            dbAssignment.State = state;
+            context.Entry(dbAssignment).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return true;
+          }
+        }
+        catch (Exception ex) { }
+
+        return false;
+      }
+    }
+
+    public async Task<bool> SaveComparisonResultsAsync(int id, string owner, List<Result> results)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        try
+        {
+          var dbAssignment = await context.Assignments.FirstOrDefaultAsync(a => a.Id == id && a.Owner.Equals(owner));
+          if (dbAssignment != null)
+          {
+            foreach (var result in results)
+            {
+              context.Results.Add(result);
+            }
+
+            await context.SaveChangesAsync();
+            return true;
+          }
+        }
+        catch (Exception) { }
+        return false;
+      }
+
+    }
   }
 }

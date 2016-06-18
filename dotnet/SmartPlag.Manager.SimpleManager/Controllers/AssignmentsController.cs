@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartPlag.Manager.Simple.EF;
 using SmartPlag.Manager.Simple.EF.Model;
+using SmartPlag.Manager.SimpleManager.Infrastructure;
 using SmartPlag.Manager.SimpleManager.Model;
 
 namespace SmartPlag.Manager.SimpleManager.Controllers
@@ -16,10 +17,12 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
   public class AssignmentsController : Controller
   {
     private AssignmentManager manager;
+    private ServiceConsumer serviceConsumer;
 
-    public AssignmentsController(AssignmentManager manager)
+    public AssignmentsController(AssignmentManager manager, ServiceConsumer serviceConsumer)
     {
       this.manager = manager;
+      this.serviceConsumer = serviceConsumer;
     }
 
     public async Task<IActionResult> Index()
@@ -87,6 +90,19 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
           return RedirectToAction("Index");
       }
 
+      return BadRequest();
+    }
+
+    public async Task<IActionResult> Evaluate(int id)
+    {
+      var user = User.Claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
+      if (user != null)
+      {
+        var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+        await this.manager.SetEvaluationStateAsync(id, user, AssignmentState.Evaluating);
+        Task.Run(() => this.serviceConsumer.EvaluateAssignment(id, user, accessToken));
+        return RedirectToAction("Index");
+      }
       return BadRequest();
     }
 

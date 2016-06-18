@@ -15,5 +15,6 @@ namespace SmartPlag.Manager.Simple.EF.Model
     public int TokenizerServiceId { get; set; }
     public int ComparisonServiceId { get; set; }
     public ComparisonService ComparisonService { get; set; }
+    public AssignmentState State { get; set; }
   }
 }

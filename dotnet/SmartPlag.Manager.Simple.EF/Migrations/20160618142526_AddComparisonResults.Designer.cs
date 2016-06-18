@@ -8,9 +8,10 @@ using SmartPlag.Manager.Simple.EF;
 namespace SmartPlag.Manager.Simple.EF.Migrations
 {
     [DbContext(typeof(PlagContext))]
-    partial class PlagContextModelSnapshot : ModelSnapshot
+    [Migration("20160618142526_AddComparisonResults")]
+    partial class AddComparisonResults
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -25,9 +26,9 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<string>("Owner");
+                    b.Property<bool>("Evaluating");
 
-                    b.Property<int>("State");
+                    b.Property<string>("Owner");
 
                     b.Property<string>("Title");
 
@@ -85,9 +86,9 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
 
                     b.Property<int>("AssignmentId");
 
-                    b.Property<int>("FirstId");
+                    b.Property<int?>("FirstId");
 
-                    b.Property<int>("SecondId");
+                    b.Property<int?>("SecondId");
 
                     b.HasKey("Id");
 
@@ -184,13 +185,11 @@ namespace SmartPlag.Manager.Simple.EF.Migrations
 
                     b.HasOne("SmartPlag.Manager.Simple.EF.Model.Submission")
                         .WithMany()
-                        .HasForeignKey("FirstId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("FirstId");
 
                     b.HasOne("SmartPlag.Manager.Simple.EF.Model.Submission")
                         .WithMany()
-                        .HasForeignKey("SecondId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SecondId");
                 });
 
             modelBuilder.Entity("SmartPlag.Manager.Simple.EF.Model.StudentFile", b =>

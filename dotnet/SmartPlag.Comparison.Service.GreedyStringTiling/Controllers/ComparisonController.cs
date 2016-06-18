@@ -7,6 +7,7 @@ using SmartPlag.Comparison.Algorithm.GreedyStringTiling;
 using SmartPlag.Comparison.Algorithm.GreedyStringTiling.Model;
 using SmartPlag.Comparison.Service.GreedyStringTiling.Model;
 using SmartPlag.Comparison.Service.GreedyStringTiling.Model.Request;
+using SmartPlag.Comparison.Service.GreedyStringTiling.Model.Response;
 
 namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
 {
@@ -19,11 +20,13 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
     {
       try
       {
-        var matches = new Dictionary<string, IList<Match>>();
+        //var matches = new Dictionary<string, IList<Match>>();
+        var matches = new List<MatchResult>();
         var submissions = request.Submissions.Select(
           s => new StudentSequence()
           {
-            Name = s.Name,
+            FirstName = s.FirstName,
+            LastName = s.LastName,
             TokenSequence = CreateCombinedSequence(s)
           }).ToList();
 
@@ -32,6 +35,10 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
         {
           foreach (var otherSequence in submissions)
           {
+            var tmpResult = new MatchResult(
+              new Student(curSequence.FirstName, curSequence.LastName),
+              new Student(otherSequence.FirstName, otherSequence.LastName));
+
             if (curSequence == otherSequence)
               continue;
 
@@ -39,7 +46,13 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
               .OrderBy(m => m.PatternIndex)
               .ToList();
 
-            matches.Add($"{curSequence.Name} - {otherSequence.Name}", match);
+            tmpResult.Matches = match;
+            if (match != null && match.Count > 0)
+            {
+              matches.Add(tmpResult);
+            }
+            //matches.Add($"{curSequence.Name} - {otherSequence.Name}", match);
+            
             curSequence.TokenSequence.Reset();
             otherSequence.TokenSequence.Reset();
           }

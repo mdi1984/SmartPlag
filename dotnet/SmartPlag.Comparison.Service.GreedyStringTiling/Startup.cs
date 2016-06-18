@@ -57,7 +57,8 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling
         ScopeName = "comparison",
         AdditionalScopes = new []
         {
-          "fullaccess"
+          "fullaccess",
+          "manager"
         },
         AutomaticAuthenticate = true
       });

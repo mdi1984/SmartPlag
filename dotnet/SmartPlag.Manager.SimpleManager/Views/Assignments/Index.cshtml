@@ -1,4 +1,5 @@
-﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentListModel
+﻿@using SmartPlag.Manager.Simple.EF.Model
+@model SmartPlag.Manager.SimpleManager.Model.AssignmentListModel
 @{
   ViewData["Title"] = "Home Page";
 }
@@ -27,13 +28,17 @@
           <td style="vertical-align:middle">@assignment.TokenizerService.Name</td>
           <td style="vertical-align:middle">@assignment.Submissions.Count</td>
           <td>
-            @Html.RouteLink("", "assignmentRoute", new { assignmentId = assignment.Id, controller = "Submission" }, new { @class = "btn btn-primary glyphicon glyphicon-folder-open" })
-            @Html.ActionLink("", "Edit", new { id = assignment.Id }, new { @class = "btn btn-primary glyphicon glyphicon-pencil" })
-            @Html.ActionLink("", "Delete", new { id = assignment.Id }, new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+            @Html.RouteLink("", "assignmentRoute", new {assignmentId = assignment.Id, controller = "Submission"}, new {@class = "btn btn-primary glyphicon glyphicon-folder-open"})
+            @Html.ActionLink("", "Edit", new {id = assignment.Id}, new {@class = "btn btn-primary glyphicon glyphicon-pencil"})
+            @Html.ActionLink("", "Delete", new {id = assignment.Id}, new {@class = "btn btn-danger glyphicon glyphicon-trash"})
 
-            @if (assignment.Submissions.Count >= 2)
+            @if (assignment.Submissions.Count >= 2 && assignment.State == AssignmentState.Open)
             {
-              @Html.ActionLink("Evaluate", "Evaluate", new { id = assignment.Id }, new { @class = "btn btn-success" })
+              @Html.ActionLink("Evaluate", "Evaluate", new {id = assignment.Id}, new {@class = "btn btn-success"})
+            }
+            else if (assignment.State == AssignmentState.Evaluated)
+            {
+              @Html.ActionLink("View Results", "Result", new {id = assignment.Id}, new {@class = "btn btn-success"})
             }
           </td>
         </tr>

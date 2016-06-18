@@ -28,5 +28,6 @@ namespace SmartPlag.Manager.Simple.EF
     public DbSet<StudentFile> Files { get; set; }
     public DbSet<TokenizerService> TokenizerServices { get; set; }
     public DbSet<ComparisonService> ComparisonServices { get; set; }
+    public DbSet<Result> Results { get; set; }
   }
 }
