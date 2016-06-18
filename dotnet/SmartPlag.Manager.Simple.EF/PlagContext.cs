@@ -29,5 +29,11 @@ namespace SmartPlag.Manager.Simple.EF
     public DbSet<TokenizerService> TokenizerServices { get; set; }
     public DbSet<ComparisonService> ComparisonServices { get; set; }
     public DbSet<Result> Results { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+      modelBuilder.Entity<Result>().Ignore(e => e.MatchCount);
+    }
   }
 }

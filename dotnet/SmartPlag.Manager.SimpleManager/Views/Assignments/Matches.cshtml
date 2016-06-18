@@ -1,0 +1,59 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentResultModel
+<style>
+  .highlight {
+    background-color: yellow;
+  }
+</style>
+
+<script>
+  function htmlEncode(value){
+    //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+    //then grab the encoded contents back out.  The div never exists on the page.
+    return $('<div/>').text(value).html();
+  }
+
+  function htmlDecode(value){
+    return $('<div/>').html(value).text();
+  }
+
+  function highlight(elementId, index, length) {
+    inputText = document.getElementById(elementId)
+    var innerHTML = inputText.innerHTML
+    console.log("innerHTML.len")
+    console.log(innerHTML);
+    if (index >= 0) {
+      innerHTML = innerHTML.substring(0, index) +
+        "<span class='highlight'>" +
+        innerHTML.substring(index, index + length) +
+        "</span>" +
+        innerHTML.substring(index + length);
+      inputText.innerHTML = innerHTML
+    }
+  }
+</script>
+
+
+<div>
+  <table class="table">
+    <tr>
+      <td>@Model.FirstName</td>
+      <td>@Model.SecondName</td>
+    </tr>
+    <tr>
+      <td style="margin: 5px;"><pre id="fSource">@Model.FirstSource</pre></td>
+      <td style="margin: 5px;"><pre>@Html.Raw(Model.SecondSource)</pre></td>
+    </tr>
+  </table>
+</div>
+
+<table class="table">
+  @foreach (var match in @Model.MatchPositions)
+  {
+    <tr>
+      <td>@match.TextStart</td>
+      <td>@match.PatternStart</td>
+      <td>@match.Length</td>
+      <td><button onclick="highlight('fSource', @match.TextStart, @match.Length)">Highlight</button></td>
+    </tr>
+  }
+</table>

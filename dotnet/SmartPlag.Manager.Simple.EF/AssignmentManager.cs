@@ -118,6 +118,38 @@ namespace SmartPlag.Manager.Simple.EF
       }
     }
 
+    public async Task<List<Result>> GetDistinctResultsAsync(int id, string user)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        return await context.Results.Where(r => r.AssignmentId == id)
+                  .Include(r => r.Assignment)
+                  .Select(r => new Result
+                  {
+                    Assignment = r.Assignment,
+                    First = r.First,
+                    Second = r.Second,
+                    MatchCount = r.Matches.Count
+                  })
+                  .OrderByDescending(r => r.MatchCount)
+                  .Distinct()
+                  .ToListAsync();
+      }
+    }
+    
+    public async Task<Result> GetDetailedResultAsync(int id, string user, int first, int second)
+    {
+      using (var context = this.contextFactory.Create())
+      {
+        return await context.Results
+                       .Include(r => r.First.Files)
+                       .Include(r => r.Second.Files)
+                       .Include(r => r.Matches)
+                       .Where(r => r.FirstId == first && r.SecondId == second && r.AssignmentId == id)
+                       .FirstOrDefaultAsync();
+      }
+    }
+
     public async Task<bool> SetEvaluationStateAsync(int id, string owner, AssignmentState state)
     {
       using (var context = this.contextFactory.Create())

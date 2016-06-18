@@ -14,5 +14,6 @@ namespace SmartPlag.Manager.Simple.EF.Model
     public int SecondId { get; set; }
     public Submission Second { get; set; }
     public List<Match> Matches { get; set; }
+    public int MatchCount { get; set; }
   }
 }

@@ -16,5 +16,7 @@ namespace SmartPlag.Manager.Simple.EF.Model
     public int ComparisonServiceId { get; set; }
     public ComparisonService ComparisonService { get; set; }
     public AssignmentState State { get; set; }
+
+    public ICollection<Result> Results { get; set; }
   }
 }
