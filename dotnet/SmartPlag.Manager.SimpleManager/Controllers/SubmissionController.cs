@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartPlag.Manager.Simple.EF;
 using SmartPlag.Manager.Simple.EF.Model;
+using SmartPlag.Manager.SimpleManager.Infrastructure;
 using SmartPlag.Manager.SimpleManager.Model;
 
 namespace SmartPlag.Manager.SimpleManager.Controllers
@@ -13,11 +15,13 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
   {
     private AssignmentManager assignmentManager;
     private SubmissionManager submissionManager;
+    private ServiceConsumer serviceConsumer;
 
-    public SubmissionController(AssignmentManager assignmentManager, SubmissionManager submissionManager)
+    public SubmissionController(AssignmentManager assignmentManager, SubmissionManager submissionManager, ServiceConsumer serviceConsumer)
     {
       this.assignmentManager = assignmentManager;
       this.submissionManager = submissionManager;
+      this.serviceConsumer = serviceConsumer;
     }
 
     public async Task<IActionResult> Index(int assignmentId)
@@ -91,6 +95,9 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
 
       await this.submissionManager.SaveFilesAsync(submissionFiles);
 
+      var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+      Task.Run(() => this.serviceConsumer.TokenizeSubmissions(id, user, accessToken));
+
       return RedirectToAction("Details", new { assignmentId = assignmentId, id = id });
     }
 
@@ -142,6 +149,8 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
 
       await this.submissionManager.SaveFilesAsync(submissionFiles);
 
+      var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
+      Task.Run(() => this.serviceConsumer.TokenizeSubmissions(submission.Id, user, accessToken));
       return RedirectToAction("Index", new { assignmentId = assignmentId });
     }
   }

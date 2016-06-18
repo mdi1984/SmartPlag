@@ -66,7 +66,8 @@ namespace SmartPlag.Manager.Simple.EF
         {
           var submission = await context.Submissions
                              .Include(s => s.Files)
-                             .Include(s => s.Assignment)
+                             .Include(s => s.Assignment).ThenInclude(s => s.ComparisonService)
+                             .Include(s => s.Assignment).ThenInclude(s => s.TokenizerService)
                              .FirstOrDefaultAsync(s => s.Assignment.Owner.Equals(user) && s.Id == id);
 
           return submission;
@@ -109,7 +110,10 @@ namespace SmartPlag.Manager.Simple.EF
         {
           // save new files
           var newFiles = submissionFiles.Where(f => f.Id == default(int)).ToList();
-          context.Files.AddRange(submissionFiles);
+          if (newFiles.Count > 0)
+          {
+            context.Files.AddRange(submissionFiles);
+          }
 
           // update existing
           var existingFileIds = submissionFiles.Where(f => f.Id != default(int)).Select(f => f.Id).ToList();
@@ -119,7 +123,9 @@ namespace SmartPlag.Manager.Simple.EF
           {
             var curFile = submissionFiles.First(f => f.Id == existingFile.Id);
 
+            existingFile.Submission = null;
             existingFile.Content = curFile.Content;
+            existingFile.TokenizedContent = curFile.TokenizedContent;
             existingFile.FileName = curFile.FileName;
             context.Entry(existingFile).State = EntityState.Modified;
           }

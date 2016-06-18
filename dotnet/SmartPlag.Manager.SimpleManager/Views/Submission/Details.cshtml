@@ -2,13 +2,13 @@
 
 <h2>@($"Submission Details: [{Model.Assignment.Title}] {Model.FirstName} {Model.LastName}")</h2>
 
-@Html.RouteLink("Add File", "assignmentRoute", new
+@*@Html.RouteLink("Add File", "assignmentRoute", new
 {
   assignmentId = Model.Assignment.Id,
   id = Model.Id,
   controller = "Submission",
   action = "NewFile"
-}, new { @class = "btn btn-success" })
+}, new { @class = "btn btn-success" })*@
 
 
 <table class="table table-striped">

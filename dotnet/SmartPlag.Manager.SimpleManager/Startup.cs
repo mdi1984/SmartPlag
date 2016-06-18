@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SmartPlag.Manager.Simple.EF;
 using SmartPlag.Manager.Simple.EF.Infrastructure;
+using SmartPlag.Manager.SimpleManager.Infrastructure;
 
 namespace SmartPlag.Manager.SimpleManager
 {
@@ -37,6 +38,7 @@ namespace SmartPlag.Manager.SimpleManager
       services.AddScoped<PlagDbContextFactory>();
       services.AddScoped<AssignmentManager>();
       services.AddScoped<SubmissionManager>();
+      services.AddScoped<ServiceConsumer>();
       services.AddMvc();
     }
 
