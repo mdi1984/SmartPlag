@@ -156,40 +156,68 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
             firstTokens.AddRange(tokens);
           }
 
+          offset = 0;
           var secondTokens = new List<TokenResult>();
           foreach (var sFile in result.Second.Files)
           {
-            var tokens = JsonConvert.DeserializeObject<List<TokenResult>>(sFile.TokenizedContent);
+            var tokens = JsonConvert.DeserializeObject<List<TokenResult>>(sFile.TokenizedContent)
+              .Select(t => new TokenResult
+              {
+                From = t.From + offset,
+                To = t.To + offset,
+                Token = t.Token
+              })
+              .ToList();
+
+            offset += sFile.Content.Length;
             secondTokens.AddRange(tokens);
           }
 
           model.MatchPositions = new List<MatchPosition>();
+          var random = new Random();
+
           foreach (var match in result.Matches)
           {
             // convert token positions/lengths to text / pattern positions/lengths
 
-            var tStart = firstTokens.ElementAt(match.TextIndex).From;
-            var pStart = secondTokens.ElementAt(match.TextIndex).From;
-            var tEnd = firstTokens.ElementAt(match.TokenLength-1).To; // TODO: Rename TokenLength to TokenEnd
+            var pStart = firstTokens.ElementAt(match.PatternIndex).From;
+            var tStart = secondTokens.ElementAt(match.TextIndex).From;
+            var pEnd = firstTokens.ElementAt(match.PatternIndex + match.TokenLength - 1).To;
+            var tEnd = secondTokens.ElementAt(match.TextIndex + match.TokenLength - 1).To;
             model.MatchPositions.Add(new MatchPosition
             {
               TextStart = tStart,
               PatternStart = pStart,
-              Length = tEnd - tStart
+              TextLength = tEnd - tStart,
+              PatternLength = pEnd - pStart,
+              RandomHexColor = string.Format("#{0:X6}", random.Next(0x1000000) & 0x7F7F7F)
             });
           }
+          int prevClose = 0;
+          int hOffset = 0;
+          foreach (var matchPos in model.MatchPositions.OrderBy(m => m.PatternStart))
+          {
+            var openIdx = matchPos.PatternStart + hOffset;
+            openIdx = openIdx >= prevClose ? openIdx : prevClose;
+            model.FirstSource = model.FirstSource.Insert(openIdx, $"#sh({matchPos.RandomHexColor})#");
+            hOffset += 13;
+            model.FirstSource = model.FirstSource.Insert(matchPos.PatternStart + matchPos.PatternLength + hOffset, "#esh#");
+            hOffset += 5;
+            prevClose = matchPos.PatternStart + matchPos.PatternLength + hOffset;
+          }
 
-          //// apply coloring now
-          //var random = new Random();
-          //model.MatchPositions.Reverse();
-          //foreach (var matchPos in model.MatchPositions)
-          //{
-          //  var color = String.Format("#{0:X6}", random.Next(0x1000000));
-          //  var spanStart = $"<span style=\"color: {color};\">";
-
-          //  model.FirstSource = model.FirstSource.Insert(matchPos.Length, "</span>");
-          //  model.FirstSource = model.FirstSource.Insert(matchPos.PatternStart, spanStart);
-          //}
+          prevClose = 0;
+          hOffset = 0;
+          foreach (var matchPos in model.MatchPositions.OrderBy(m => m.TextStart))
+          {
+            var openIdx = matchPos.TextStart + hOffset;
+            openIdx = openIdx >= prevClose ? openIdx : prevClose;
+            model.SecondSource = model.SecondSource.Insert(openIdx, $"#sh({matchPos.RandomHexColor})#");
+            hOffset += 13;
+            model.SecondSource = model.SecondSource.Insert(matchPos.TextStart + matchPos.TextLength + hOffset, "#esh#");
+            hOffset += 5;
+            prevClose = matchPos.TextStart + matchPos.TextLength + hOffset;
+          }
 
           return View(model);
         }

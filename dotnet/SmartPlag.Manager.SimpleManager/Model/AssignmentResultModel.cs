@@ -15,7 +15,8 @@ namespace SmartPlag.Manager.SimpleManager.Model
   {
     public int PatternStart { get; set; }
     public int TextStart { get; set; }
-    public int Length { get; set; }
+    public int PatternLength { get; set; }
+    public int TextLength { get; set; }
     public string RandomHexColor { get; set; }
   }
 }
