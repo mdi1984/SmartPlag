@@ -219,4 +219,5 @@ FakesAssemblies/
 _Pvt_Extensions
 connectionStrings.config
 *.fragment.lock.json
-*launchSettings.json
+*.min.*s
+dotnet/SmartPlag.Manager.SimpleManager/wwwroot/lib/

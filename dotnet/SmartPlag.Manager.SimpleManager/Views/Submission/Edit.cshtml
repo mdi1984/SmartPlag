@@ -1,0 +1,22 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.EditSubmissionModel
+
+<h2>New Submission -todo edit title-</h2>
+
+@using (Html.BeginForm("Create", "Submission", new { assignmentId = ViewBag.AssignmentId }, FormMethod.Post, null, new { @role = "form", enctype = "multipart/form-data" }))
+{
+  <div class="form-group">
+    @Html.LabelFor(model => model.FirstName)
+    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "Enter Assignment Title", @required = "required" })
+  </div>
+  <div class="form-group">
+    @Html.LabelFor(model => model.LastName)
+    @Html.TextBoxFor(model => model.LastName, new {@class = "form-control", @placeholder = "Enter Assignment Title", @required = "required"})
+  </div>
+
+  <div class="form-group">
+    @Html.LabelFor(model => model.Files)
+    <input type="file" name="files" multiple />
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+}

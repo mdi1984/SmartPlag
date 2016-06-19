@@ -1,0 +1,51 @@
+﻿@model SmartPlag.Manager.Simple.EF.Model.Submission
+
+<h2>@($"Submission Details: [{Model.Assignment.Title}] {Model.FirstName} {Model.LastName}")</h2>
+
+@*@Html.RouteLink("Add File", "assignmentRoute", new
+{
+  assignmentId = Model.Assignment.Id,
+  id = Model.Id,
+  controller = "Submission",
+  action = "NewFile"
+}, new { @class = "btn btn-success" })*@
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>FileName</th>
+      <th>Size</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var file in Model.Files)
+      {
+      <tr>
+        <td style="vertical-align:middle">@file.FileName</td>
+        <td style="vertical-align:middle">@file.Content.Length</td>
+        <td>
+          @Html.RouteLink("", "assignmentRoute", new
+          {
+            assignmentId = Model.Assignment.Id,
+            controller = "Submission",
+            action = "DeleteFile",
+            id = file.Id,
+            submissionId = file.SubmissionId
+          }, new { @class = "btn btn-primary glyphicon glyphicon-trash" })
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@using (Html.BeginForm("NewFile", "Submission", new { assignmentId = ViewBag.AssignmentId, id = Model.Id }, FormMethod.Post, null, new { @role = "form", enctype = "multipart/form-data" }))
+{ 
+  <div class="form-group">
+    <label>Add Files:</label>
+    <input type="file" name="files" multiple />
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
+}

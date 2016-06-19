@@ -1,0 +1,39 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.EditAssignmentModel
+
+@{
+  ViewData["Title"] = "Home Page";
+}
+<div>
+  <div class="container">
+    @if (Model.Id == null)
+    {
+      <h1>New Assignment</h1>
+    }
+    else
+    {
+      <h2>@($"Edit Assignment \"{Model.Title}\"")</h2>
+    }
+
+    @using (Html.BeginForm("Edit", "Assignments", FormMethod.Post, new { @role = "form" }))
+    {
+      <div class="form-group">
+        @Html.LabelFor(model => model.Title)
+        @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @placeholder = "Enter Assignment Title", @required = "required" })
+      </div>
+      <div class="form-group">
+        @Html.LabelFor(model => model.TokenizerService)
+        @Html.DropDownListFor(model => model.TokenizerServiceId, ViewBag.Tokenizers as List<SelectListItem>, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.TokenizerServiceId, "", new { @class = "text-danger", @required = "required" })
+      </div>
+
+      <div class="form-group">
+        @Html.LabelFor(model => model.ComparisonService)
+        @Html.DropDownListFor(model => model.ComparisonServiceId, ViewBag.Comparators as List<SelectListItem>, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ComparisonServiceId, "", new { @class = "text-danger" })
+      </div>
+
+      <button type="submit" class="btn btn-default">Submit</button>
+    }
+  </div>
+
+</div>

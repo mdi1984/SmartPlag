@@ -1,0 +1,33 @@
+﻿@using SmartPlag.Manager.Simple.EF.Model
+@model List<Result>
+
+<h2>@($"\"{Model.FirstOrDefault()?.Assignment.Title}\" Result")</h2>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>First</th>
+      <th>Second</th>
+      <th># Matches</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var result in Model)
+    {
+      <tr>
+        <td style="vertical-align:middle">@($"{result.First.FirstName} {result.First.LastName}")</td>
+        <td style="vertical-align:middle">@($"{result.Second.FirstName} {result.Second.LastName}")</td>
+        <td style="vertical-align:middle">@($"{result.MatchCount}")</td>
+        <td style="vertical-align:middle">@Html.ActionLink("Details", "Matches", new
+            {
+              id = Model.FirstOrDefault()?.Assignment.Id,
+              first = result.First.Id,
+              second = result.Second.Id
+            }, new { @class = "btn btn-primary" })</td>
+      </tr>
+    }
+
+  </tbody>
+</table>

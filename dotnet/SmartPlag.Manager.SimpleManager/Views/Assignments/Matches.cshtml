@@ -1,0 +1,36 @@
+﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentResultModel
+<style>
+  .highlight {
+    background-color: yellow;
+  }
+</style>
+
+<script>
+  function markSources() {
+    highlight('#fSource');
+    highlight('#sSource');
+  }
+
+  function highlight(elementId) {
+    length = length+4
+    var innerText = $(elementId).text();
+      var markedHtml = $(elementId).html();
+      console.log(markedHtml);
+      $(elementId).html(markedHtml.replace(/(#sh\((.+)\)#)/g, "<span style='color: $2'>").replace(/#esh#/g, "</span>"))
+  }
+</script>
+
+<button onclick="markSources()">Highlight</button>
+
+<div>
+  <table class="table">
+    <tr>
+      <td>@Model.FirstName</td>
+      <td>@Model.SecondName</td>
+    </tr>
+    <tr>
+      <td style="margin: 5px;"><pre id="fSource">@Model.FirstSource</pre></td>
+      <td style="margin: 5px;"><pre id="sSource">@Model.SecondSource</pre></td>
+    </tr>
+  </table>
+</div>
