@@ -190,7 +190,7 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
               PatternStart = pStart,
               TextLength = tEnd - tStart,
               PatternLength = pEnd - pStart,
-              RandomHexColor = string.Format("#{0:X6}", random.Next(0x1000000) & 0x7F7F7F)
+              RandomHexColor = string.Format("#{0:X6}", random.Next(0x1000000) & 0xF0F0F0)
             });
           }
           int prevClose = 0;
