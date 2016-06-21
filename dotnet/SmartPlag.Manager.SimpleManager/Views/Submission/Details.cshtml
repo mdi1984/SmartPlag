@@ -1,4 +1,12 @@
 ﻿@model SmartPlag.Manager.Simple.EF.Model.Submission
+@{
+  ViewData["Title"] = "Submission Details";
+}
+<ol class="breadcrumb">
+  <li><a href="/Assignments">Assignments</a></li>
+  <li><a href="./">Submission</a></li>
+  <li class="active">@($"{Model.FirstName} {Model.LastName}")</li>
+</ol>
 
 <h2>@($"Submission Details: [{Model.Assignment.Title}] {Model.FirstName} {Model.LastName}")</h2>
 

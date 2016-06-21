@@ -37,16 +37,16 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
       }
 
       // call comparison service and store results
-      await this.CompareSubmissions(assignment, user, assignment.ComparisonService.BaseUrl, accessToken);
+      await this.CompareSubmissions(assignment, user, assignment.ComparisonService, accessToken);
 
 
       // set evaluationstate to false
     }
 
-    private async Task CompareSubmissions(Assignment assignment, string user, string comparatorUrl, string accessToken)
+    private async Task CompareSubmissions(Assignment assignment, string user, ComparisonService comparisonService, string accessToken)
     {
       var client = new HttpClient();
-      client.BaseAddress = new Uri(comparatorUrl);
+      client.BaseAddress = new Uri(comparisonService.BaseUrl);
       client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
       client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
         "Bearer",
@@ -85,7 +85,7 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
         payload.Submissions.Add(reqSubmission);
       }
 
-      var response = await client.PostAsJsonAsync("/api/comparison", payload);
+      var response = await client.PostAsJsonAsync(comparisonService.RequestPath, payload);
       if (response.StatusCode == System.Net.HttpStatusCode.OK)
       {
         var comparatorResults = await response.Content.ReadAsAsync<List<ComparatorResult>>();
@@ -127,19 +127,22 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
         }
 
         await this.assignmentManager.SaveComparisonResultsAsync(assignment.Id, user, entityResults);
+        await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Evaluated);
+      }
+      else
+      {
+        await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Open);
       }
 
-      await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Evaluated);
     }
 
     public async Task TokenizeSubmissions(int submissionId, string user, string accessToken)
     {
       var submission = await this.submissionManager.GetSubmissionByIdAsync(submissionId, user);
-      var tokenizerUrl = $"{submission.Assignment.TokenizerService.BaseUrl}/api/tokenizer";
-      await this.Tokenize(submission, tokenizerUrl, accessToken);
+      await this.Tokenize(submission, submission.Assignment.TokenizerService, accessToken);
     }
 
-    private async Task Tokenize(Submission submission, string tokenizerUrl, string accessToken)
+    private async Task Tokenize(Submission submission, TokenizerService tokenizerService, string accessToken)
     {
       // check if all files are tokenized - if so, abort
       var fullyTokenized = !submission.Files.Any(f => string.IsNullOrEmpty(f.TokenizedContent) && !string.IsNullOrEmpty(f.Content));
@@ -147,7 +150,7 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
         return;
 
       var client = new HttpClient();
-      client.BaseAddress = new Uri(tokenizerUrl);
+      client.BaseAddress = new Uri(tokenizerService.BaseUrl);
       client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
       client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
         "Bearer",
@@ -177,7 +180,7 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
 
       payload.Assignments.Add(restAssignment);
 
-      var response = await client.PostAsJsonAsync("/api/tokenizer", payload);
+      var response = await client.PostAsJsonAsync(tokenizerService.RequestPath, payload);
       if (response.StatusCode == System.Net.HttpStatusCode.OK)
       {
         var studResult = (await response.Content.ReadAsAsync<Model.TokenizerResult>())

@@ -117,8 +117,10 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
         {
           var firstContent = string.Join("", result.First.Files.Select(c => c.Content));
           var secondContent = string.Join("", result.Second.Files.Select(c => c.Content));
+          var assignment = await this.manager.GetAssignmentByIdAsync(id, user);
           var model = new AssignmentResultModel
           {
+            Assignment = assignment,
             FirstName = $"{result.First.FirstName} {result.First.LastName}",
             SecondName = $"{result.Second.FirstName} {result.Second.LastName}",
             FirstSource = firstContent,

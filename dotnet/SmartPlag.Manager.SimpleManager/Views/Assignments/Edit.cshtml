@@ -1,8 +1,13 @@
 ﻿@model SmartPlag.Manager.SimpleManager.Model.EditAssignmentModel
 
 @{
-  ViewData["Title"] = "Home Page";
+  ViewData["Title"] = "Edit Assignments";
 }
+<ol class="breadcrumb">
+  <li><a href="/Assignments">Assignments</a></li>
+  <li class="active">@($"{Model.Title}")</li>
+</ol>
+
 <div>
   <div class="container">
     @if (Model.Id == null)

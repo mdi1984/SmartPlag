@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using SmartPlag.Manager.Simple.EF.Model;
 
 namespace SmartPlag.Manager.SimpleManager.Model
 {
   public class AssignmentResultModel
   {
+    public Assignment Assignment { get; set; }
     public string FirstName { get; set; }
     public string SecondName { get; set; }
     public string FirstSource { get; set; }

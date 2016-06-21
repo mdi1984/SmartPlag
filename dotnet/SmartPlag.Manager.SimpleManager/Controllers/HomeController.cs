@@ -12,27 +12,7 @@ namespace SmartPlag.Manager.SimpleManager.Controllers
   {
     public IActionResult Index()
     {
-      return View();
-    }
-
-    public IActionResult About()
-    {
-      ViewData["Message"] = "Your application description page.";
-
-      return View();
-    }
-
-    [Authorize]
-    public async Task<IActionResult> Contact()
-    {
-      // use accesstoken to query other apis
-      ViewBag.IdentityToken = await HttpContext.Authentication.GetTokenAsync("id_token");
-      ViewBag.AccessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
-      ViewBag.TokenizerToken = await HttpContext.Authentication.GetTokenAsync("tokenizer");
-
-      ViewData["Message"] = "Your contact page.";
-
-      return View();
+      return View("About");
     }
 
     public IActionResult Error()

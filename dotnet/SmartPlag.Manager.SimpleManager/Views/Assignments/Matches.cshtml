@@ -1,4 +1,7 @@
 ﻿@model SmartPlag.Manager.SimpleManager.Model.AssignmentResultModel
+@{
+  ViewData["Title"] = "Matches";
+}
 <style>
   .highlight {
     background-color: yellow;
@@ -6,21 +9,31 @@
 </style>
 
 <script>
+
   function markSources() {
     highlight('#fSource');
     highlight('#sSource');
   }
 
   function highlight(elementId) {
-    length = length+4
+    length = length + 4
     var innerText = $(elementId).text();
-      var markedHtml = $(elementId).html();
-      console.log(markedHtml);
-      $(elementId).html(markedHtml.replace(/(#sh\((.+)\)#)/g, "<span style='color: $2'>").replace(/#esh#/g, "</span>"))
+    var markedHtml = $(elementId).html();
+    console.log(markedHtml);
+    $(elementId).html(markedHtml.replace(/(#sh\((.+)\)#)/g, "<span style='color: $2'>").replace(/#esh#/g, "</span>"))
   }
+
+  $(document).ready(function () {
+    markSources();
+  });
+
 </script>
 
-<button onclick="markSources()">Highlight</button>
+<ol class="breadcrumb">
+  <li><a href="/Assignments">Assignments</a></li>
+  <li><a href="/Assignments/Result/@Model.Assignment.Id">@Model.Assignment.Title</a></li>
+  <li class="active">@($"{Model.FirstName} - {Model.SecondName}")</li>
+</ol>
 
 <div>
   <table class="table">
