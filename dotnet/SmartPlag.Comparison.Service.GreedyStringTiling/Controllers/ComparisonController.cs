@@ -42,7 +42,7 @@ namespace SmartPlag.Comparison.Service.GreedyStringTiling.Controllers
             if (curSequence == otherSequence)
               continue;
 
-            var match = GstComparator.Compare<int>(curSequence.TokenSequence, otherSequence.TokenSequence, 3)
+            var match = GstComparator.Compare<int>(curSequence.TokenSequence, otherSequence.TokenSequence, 9)
               .OrderBy(m => m.PatternIndex)
               .ToList();
 
