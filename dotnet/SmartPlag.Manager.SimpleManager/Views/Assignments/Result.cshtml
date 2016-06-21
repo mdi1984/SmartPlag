@@ -1,5 +1,12 @@
 ﻿@using SmartPlag.Manager.Simple.EF.Model
 @model List<Result>
+@{
+  ViewData["Title"] = "Result";
+}
+<ol class="breadcrumb">
+  <li><a href="/Assignments">Assignments</a></li>
+  <li class="active">@($"{Model.FirstOrDefault()?.Assignment.Title} Results")</li>
+</ol>
 
 <h2>@($"\"{Model.FirstOrDefault()?.Assignment.Title}\" Result")</h2>
 

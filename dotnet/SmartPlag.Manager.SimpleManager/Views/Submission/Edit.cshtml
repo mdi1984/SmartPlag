@@ -1,6 +1,15 @@
 ﻿@model SmartPlag.Manager.SimpleManager.Model.EditSubmissionModel
+@{
+  ViewData["Title"] = "Edit Submission";
+}
 
-<h2>New Submission -todo edit title-</h2>
+<ol class="breadcrumb">
+  <li><a href="/Assignments">Assignments</a></li>
+  <li><a href="./">Submission</a></li>
+  <li class="active">New</li>
+</ol>
+
+<h2>New Submission</h2>
 
 @using (Html.BeginForm("Create", "Submission", new { assignmentId = ViewBag.AssignmentId }, FormMethod.Post, null, new { @role = "form", enctype = "multipart/form-data" }))
 {

@@ -127,9 +127,13 @@ namespace SmartPlag.Manager.SimpleManager.Infrastructure
         }
 
         await this.assignmentManager.SaveComparisonResultsAsync(assignment.Id, user, entityResults);
+        await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Evaluated);
+      }
+      else
+      {
+        await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Open);
       }
 
-      await this.assignmentManager.SetEvaluationStateAsync(assignment.Id, user, AssignmentState.Evaluated);
     }
 
     public async Task TokenizeSubmissions(int submissionId, string user, string accessToken)

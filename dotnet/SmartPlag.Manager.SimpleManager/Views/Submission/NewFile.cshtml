@@ -1,4 +1,8 @@
-﻿<h2>NewFile</h2>
+﻿@{
+  ViewData["Title"] = "Upload Files";
+}
+
+<h2>NewFile</h2>
 
 @using (Html.BeginForm("Create", "Submission", new { assignmentId = ViewBag.AssignmentId }, FormMethod.Post, null, new { @role = "form", enctype = "multipart/form-data" }))
 {
